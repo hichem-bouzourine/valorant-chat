@@ -1,0 +1,26 @@
+datasource db {
+  // could be postgresql or mysql
+  provider = "postgres"
+  url      = "postgres://postgres.ylxlyubijzvuijihvmjk:projet_pc3r@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
+}
+ 
+generator db {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+ 
+model matchResult {
+  id        String   @default(cuid()) @id
+  team1     String
+  team2     String
+  score1    Int
+  score2    Int
+  flag1     String
+  flag2     String
+  time_completed String
+  round_info String
+  tournament_name String
+  match_page String
+  tournament_icon String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
