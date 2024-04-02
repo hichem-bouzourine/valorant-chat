@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"pc3r/matchesResult/types"
+
+	godotenv "github.com/joho/godotenv"
 )
 
 func fetchFromUrl(URL string) (*http.Response, error) {
@@ -24,8 +27,11 @@ func fetchFromUrl(URL string) (*http.Response, error) {
 }
 
 func GetMatchesResult() ([]types.MatchesResult, error) {
-	
-	URL := "https://vlrggapi.vercel.app/match/results"
+	// Retrieve my API base url from the .env file
+	godotenv.Load(".env")
+	BASE_URL := os.Getenv("API_BASE_URL")	
+
+	URL := fmt.Sprintf("%s%s",BASE_URL, "match/results")
 	res, err := fetchFromUrl(URL)
 	if err != nil {
 		fmt.Println("Some error occured")
