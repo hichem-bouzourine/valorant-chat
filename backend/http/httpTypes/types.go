@@ -1,5 +1,11 @@
 package httpTypes
 
+import (
+	db "pc3r/prisma/db"
+)
+
+// Ce découpage était inspiré pas Tabellout Yanis.
+
 type Error string
 
 const (
@@ -26,6 +32,31 @@ func MakeError(message string, code Error) HTTPErrorRes {
 		Error: e,
 	}
 
+}
+
+type LoginSchema struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+type LoginRes struct {
+	User   UserRes    `json:"user"`
+	Tokens AuthTokens `json:"tokens"`
+}
+
+type UserRes struct {
+	*db.UserModel
+	Chats []db.ChatModel `json:"chats"`
+}
+
+type SignupSchema struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+}
+type SignupRes struct {
+	Success bool   `json:"success"`
+	Id      string `json:"id"`
+	Message string `json:"message"`
 }
 
 type MessageResponse struct {

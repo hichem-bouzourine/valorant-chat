@@ -41,3 +41,35 @@ model upcomingMatches {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model User {
+    id        String    @id @default(cuid())
+    name      String
+    email     String    @unique
+    password  String?
+    photo     String?   @default("https://img.freepik.com/premium-vector/kid-programming-icon-flat-vector-school-computer-education-code-technology-isolated_98396-57669.jpg?size=626&ext=jpg&ga=GA1.1.1795466942.1712177977&semt=ais")
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    Message   Message[]
+    chats     Chat[]
+}
+
+model Chat {
+    id       String    @id @default(cuid())
+    date     DateTime  @default(now())
+    name     String
+    photo    String?   @default("https://cryptologos.cc/logos/chatcoin-chat-logo.png?v=029")
+    users    User[]
+    Messages Message[]
+}
+
+model Message {
+    id         String   @id @default(cuid())
+    content    String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    chat_id    String
+    chat       Chat     @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
