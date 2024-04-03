@@ -9,4 +9,7 @@ require (
 	github.com/steebchen/prisma-client-go v0.35.0
 )
 
-require github.com/stretchr/testify v1.9.0 // indirect
+require (
+	github.com/jasonlvhit/gocron v0.0.1 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
+)

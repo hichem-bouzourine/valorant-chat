@@ -5,5 +5,6 @@ import (
 )
 
 func UseHttpRouter(mux *http.ServeMux) {
-	mux.Handle("/matchesResult", JsonContentMiddleware(http.HandlerFunc(GetMatchesResult)))
+	mux.Handle("/matchesResult", JsonContentMiddleware(http.HandlerFunc(GetMatchesResultsFromDB)))
+	mux.Handle("/upcomingMatches", JsonContentMiddleware(http.HandlerFunc(GetUpcomingMatchesFromDB)))
 }
