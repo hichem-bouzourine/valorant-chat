@@ -4,7 +4,7 @@ import (
 	db "pc3r/prisma/db"
 )
 
-// Ce découpage était inspiré pas Tabellout Yanis.
+// Ce découpage était inspiré par Tabellout Yanis.
 
 type Error string
 
