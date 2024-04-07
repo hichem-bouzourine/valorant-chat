@@ -5,9 +5,9 @@ import (
 )
 
 func UseHttpRouter(mux *http.ServeMux) {
-	mux.Handle("/matchesResult", JsonContentMiddleware(http.HandlerFunc(GetMatchesResultsFromDB)))
-	mux.Handle("/upcomingMatches", JsonContentMiddleware(http.HandlerFunc(GetUpcomingMatchesFromDB)))
-	mux.Handle("/login", JsonContentMiddleware(http.HandlerFunc(login)))
-	mux.Handle("/signup", JsonContentMiddleware(http.HandlerFunc(signup)))
+	mux.Handle("/api/matchesResult", JsonContentMiddleware(http.HandlerFunc(GetMatchesResultsFromDB)))
+	mux.Handle("/api/upcomingMatches", JsonContentMiddleware(http.HandlerFunc(GetUpcomingMatchesFromDB)))
+	mux.Handle("/api/auth/login", JsonContentMiddleware(http.HandlerFunc(login)))
+	mux.Handle("/api/auth/signup", JsonContentMiddleware(http.HandlerFunc(signup)))
 
 }
