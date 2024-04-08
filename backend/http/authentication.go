@@ -1,6 +1,7 @@
 package http
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	types "pc3r/http/httpTypes"
@@ -104,4 +105,58 @@ func signup(res http.ResponseWriter, req *http.Request) {
 	res.WriteHeader(http.StatusCreated)
 	json.NewEncoder(res).Encode(types.SignupRes{Message: "User Created", Success: true, Id: new_user.ID})
 
+}
+
+// Authentication using Sockets
+func AuthSocketMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		tokenString := req.URL.Query().Get("Authorization")
+		req.Header.Set("Authorization", tokenString)
+		AuthGate(next).ServeHTTP(res, req)
+	})
+}
+
+func AuthGate(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		tokenString := req.Header.Get("Authorization")
+		
+		if tokenString == "" {
+			res.WriteHeader(http.StatusUnauthorized)
+			message := "Unauthorized, You need a token"
+			json.NewEncoder(res).Encode(types.MakeError(message, types.UNAUTHORIZED))
+			return
+		}
+		tokenString = tokenString[len("Bearer "):]
+		if tokenString == "" {
+			res.WriteHeader(http.StatusUnauthorized)
+			message := "Unauthorized, You need a JSON Web Token"
+			json.NewEncoder(res).Encode(types.MakeError(message, types.UNAUTHORIZED))
+			return
+		}
+		claims, valid := jwt.VerifyToken(tokenString)
+		if !valid {
+			res.WriteHeader(http.StatusUnauthorized)
+			message := "Unauthorized, You have an invalid JSON Web Token"
+			json.NewEncoder(res).Encode(types.MakeError(message, types.UNAUTHORIZED))
+			return
+		}
+		id := claims["id"].(string)
+		prisma, ctx := prisma.GetPrisma()
+		user, err := prisma.User.FindFirst(
+			db.User.ID.Equals(id),
+		).With(
+			db.User.Chats.Fetch(),
+		).Exec(ctx)
+		if err != nil {
+			res.WriteHeader(http.StatusNotFound)
+			message := "User Not Found"
+			json.NewEncoder(res).Encode(types.MakeError(message, types.NOT_FOUND))
+			return
+		}
+		ctx_req := req.Context()
+		ctx_req = context.WithValue(ctx_req, types.CtxAuthKey{}, user)
+		req = req.WithContext(ctx_req)
+
+		next.ServeHTTP(res, req)
+	})
 }

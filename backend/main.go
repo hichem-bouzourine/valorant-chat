@@ -7,6 +7,7 @@ import (
 	database "pc3r/database"
 	http2 "pc3r/http"
 	"pc3r/prisma"
+	ws "pc3r/webSocket"
 
 	"github.com/jasonlvhit/gocron"
 	"github.com/rs/cors"
@@ -17,6 +18,7 @@ var mux = http.NewServeMux()
 func main() {
 
 	http2.UseHttpRouter(mux)
+	ws.UseSocketRouter(mux)
 	// Establish connection with the remote database using Prisma ORM
 	prisma.Init()
 

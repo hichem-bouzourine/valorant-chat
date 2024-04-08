@@ -4,14 +4,13 @@ import (
 	"encoding/json"
 	"net/http"
 	httpTypes "pc3r/http/httpTypes"
-	matchesResult "pc3r/matchesResult"
-	types_matches "pc3r/matchesResult/types"
+	"pc3r/matchesResult"
 	db "pc3r/prisma"
 )
 
 
 func GetMatchesResult(res http.ResponseWriter, req *http.Request) {
-	matchesResult, err := matchesResult.GetMatchesResultFromAPI()
+	matches, err := matchesResult.GetMatchesResultFromAPI()
 	if err != nil {
 		res.WriteHeader(http.StatusBadRequest)
 		message := "Bad request to MATCHES/RESULT API"
@@ -19,17 +18,17 @@ func GetMatchesResult(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	type responseGetMatchesResult struct {
-		MatchesResult []types_matches.MatchesResult `json:"matchesResult"`
+		MatchesResult []matchesResult.MatchesResult `json:"matchesResult"`
 	}
 	response := responseGetMatchesResult{
-		MatchesResult: matchesResult,
+		MatchesResult: matches,
 	}
 	res.WriteHeader(http.StatusCreated)
 	json.NewEncoder(res).Encode(response)
 }
 
 type responseGetMatchesResults struct {
-	MatchesResults []types_matches.MatchesResult `json:"matchesResults"`
+	MatchesResults []matchesResult.MatchesResult `json:"matchesResults"`
 }
 
 func GetMatchesResultsFromDB(res http.ResponseWriter, req *http.Request) { 
@@ -45,9 +44,9 @@ func GetMatchesResultsFromDB(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Convert result to the appropriate type
-    var matchesResults [] types_matches.MatchesResult
+    var matchesResults [] matchesResult.MatchesResult
     for _, r := range result {
-        matchesResults = append(matchesResults, types_matches.MatchesResult{
+        matchesResults = append(matchesResults, matchesResult.MatchesResult{
 			Team1: r.Team1,
 			Team2: r.Team2,
 			Score1: r.Score1,

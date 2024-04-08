@@ -1,7 +1,7 @@
 datasource db {
   // could be postgresql or mysql
   provider = "postgres"
-  url      = "postgres://postgres.ylxlyubijzvuijihvmjk:projet_pc3r@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
+  url      = "postgres://postgres.ylxlyubijzvuijihvmjk:projet_pc3r@aws-0-eu-central-1.pooler.supabase.com:5432/postgres?schema=public"
 }
  
 generator db {
@@ -21,6 +21,8 @@ model matchResult {
   tournament_name String
   match_page String
   tournament_icon String
+  chat_id   String   @unique
+  chat      Chat     @relation(fields: [chat_id],references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -59,6 +61,7 @@ model Chat {
     date     DateTime  @default(now())
     name     String
     photo    String?   @default("https://cryptologos.cc/logos/chatcoin-chat-logo.png?v=029")
+    match    matchResult?
     users    User[]
     Messages Message[]
 }

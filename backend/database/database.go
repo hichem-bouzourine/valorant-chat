@@ -23,7 +23,7 @@ func PushData() {
 
 	for _, matchResult := range matches {
 
-		_, err :=  matchesResult.PushMatchesResults(matchResult)
+		_, err :=  matchesResult.PushMatchesResults(matchResult, time.Now())
 
 		if err != nil {
 			fmt.Println("Error while trying to push all Matches Results")
