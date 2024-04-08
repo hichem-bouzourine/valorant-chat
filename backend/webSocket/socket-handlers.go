@@ -1,9 +1,9 @@
 package webSocket
 
 import (
-	http2 "pc3r/http"
 	"pc3r/prisma"
 	prismaDb "pc3r/prisma/db"
+	"pc3r/services"
 )
 
 
@@ -62,7 +62,7 @@ func sendMessage(client *Client, d interface{}) {
 	if err != nil {
 		return
 	}
-	structured_message := http2.StructureMessage(*message)
+	structured_message := services.StructureMessage(*message)
 	// make sure to send the message to the others
 	go func() {
 		hub.broadcast <- Message{

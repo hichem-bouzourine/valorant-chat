@@ -5,9 +5,8 @@ package webSocket
 import (
 	"log"
 	"net/http"
-	http2 "pc3r/http"
-	types "pc3r/http/httpTypes"
 	"pc3r/prisma/db"
+	"pc3r/services"
 
 	"github.com/gorilla/websocket"
 )
@@ -42,7 +41,7 @@ func (rt *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		// accept all?
 		CheckOrigin: func(r *http.Request) bool { return true },
 	}
-	user, _ := req.Context().Value(types.CtxAuthKey{}).(*db.UserModel)
+	user, _ := req.Context().Value(services.CtxAuthKey{}).(*db.UserModel)
 
 	// upgrade connection to socket
 	socket, err := upgrader.Upgrade(res, req, nil)
@@ -93,6 +92,6 @@ func createSocketRouter() *Router {
 func UseSocketRouter(mux *http.ServeMux) *Router {
 	socketRouter := createSocketRouter()
 	// Imply that every uncomming socket is authenticated before the HTTP -> socket upgrade
-	mux.Handle("/ws", http2.AuthSocketMiddleware(socketRouter))
+	mux.Handle("/ws", services.AuthSocketMiddleware(socketRouter))
 	return socketRouter
 }
