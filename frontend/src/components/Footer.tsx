@@ -1,7 +1,7 @@
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8">
+    <footer className="bg-gray-900 text-white py-9">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div className="text-lg font-bold mb-4 lg:mb-0">Valorant Match Results</div>
           <div className="mb-4 lg:mb-0">
