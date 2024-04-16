@@ -17,7 +17,6 @@ type LoginRes struct {
 
 type UserRes struct {
 	*db.UserModel
-	Chats []db.ChatModel `json:"chats"`
 }
 
 type SignupSchema struct {

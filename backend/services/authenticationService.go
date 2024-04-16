@@ -28,8 +28,6 @@ func login(res http.ResponseWriter, req *http.Request) {
 	// vérifier que l'utilisateur existe
 	user, err := prisma.User.FindFirst(
 		db.User.Email.Equals(body.Email),
-	).With(
-		db.User.Chats.Fetch(),
 	).Exec(ctx)
 	if err != nil {
 		res.WriteHeader(http.StatusUnauthorized)
@@ -48,7 +46,6 @@ func login(res http.ResponseWriter, req *http.Request) {
 	// l'utilisateur est bien connecté, lui envoyer les jettons de connections
 	userStruct := UserRes{
 		UserModel: user,
-		Chats:     user.Chats(),
 	}
 	accesToken, _, _ := jwt.CreateToken(user.ID)
 	tokens := AuthTokens{
