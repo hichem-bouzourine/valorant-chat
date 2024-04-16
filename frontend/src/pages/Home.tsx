@@ -1,6 +1,6 @@
-import NavBar from './NavBar'
-import Footer from './Footer'
-import Feed from './Feed'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
+import Feed from '../components/Feed'
 
 
 const Home = () => {

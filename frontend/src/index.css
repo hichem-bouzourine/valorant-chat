@@ -26,7 +26,6 @@
 
 .main:after {
   content: "";
-  background-image: url("/public/grid.svg");
   z-index: 1;
   position: absolute;
   width: 100%;
@@ -164,6 +163,6 @@
 }
 
 .bg-image {
-  background-image: url("/public/bg-image.jpg");
+  background-image: url("/bg-image.jpg");
 
 }

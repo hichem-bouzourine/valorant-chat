@@ -1,5 +1,10 @@
+// import { useState } from "react";
+import { Link } from "react-router-dom"
+import { useAuth } from "../context/AuthProvider";
 
 const Feed = () => {
+    const {user} = useAuth();
+
   return (
     <section className="w-full flex flex-col items-center gap-7">
         <h1 className="head_text text-center">
@@ -14,11 +19,22 @@ const Feed = () => {
         <div className="flex flex-col justify-center items-center">
             <p
                 className="text-center text-slate-400 text-2xl"
-                >Dont waste your time and come to enjoy with us.</p>
-            <div className='mx-6 my-4'>
-                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-                    Register
-                </button>
+                >Don't waste your time and come enjoy with us..</p>
+            <div className='mx-6 my-7'>
+                {user ? (
+                    <div className="desc text-center">
+                        Our amazing plateform is 100% free, No credit card required.
+                    </div>  
+                ) : (
+                    <button>
+                        <Link to='/login' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded'> 
+                            Login
+                        </Link>
+                    </button>
+                )
+
+                }
+            
             </div>
         </div>
         <div className="my-2 w-2/3 h-1/2 flex justify-center items-center">
