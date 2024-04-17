@@ -20,7 +20,7 @@ const Feed = () => {
             <p
                 className="text-center text-slate-400 text-2xl"
                 >Don't waste your time and come enjoy with us..</p>
-            <div className='mx-6 my-7'>
+            <div className='mx-6 my-2'>
                 {user ? (
                     <div className="desc text-center">
                         Our amazing plateform is 100% free, No credit card required.
