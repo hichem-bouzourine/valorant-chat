@@ -166,3 +166,23 @@
   background-image: url("/bg-image.jpg");
 
 }
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-2 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-gray-400 rounded-md
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-lg
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-700
+}

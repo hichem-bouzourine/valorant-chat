@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Error from './components/Error.tsx'
 import Login from './pages/Login.tsx'
 import { AuthProvider } from './context/AuthProvider.tsx';
+import Matchs from './pages/Matchs.tsx'
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,12 @@ const router = createBrowserRouter([
       path: '/login',
       element: <Login />,
       errorElement: <Error />,
-    }
+    },
+    {
+      path: '/matchs',
+      element: <Matchs />,
+      errorElement: <Error />,
+    },
 ])
 
 
