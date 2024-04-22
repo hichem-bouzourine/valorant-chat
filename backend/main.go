@@ -32,8 +32,8 @@ func main() {
 	
 	// lancer le serveur dans un Thread séparé pour maximiser la concurrence
 	go func() {
-		fmt.Println("Server running on PORT  3333")
-		err := http.ListenAndServe(":3333", handler)
+		fmt.Println("Server running on PORT 5000")
+		err := http.ListenAndServe(":5000", handler)
 		if err != nil {
 			log.Fatal(err)
 		}
