@@ -1,6 +1,7 @@
 import axios from "axios"
 
 export interface Match {
+    id: string
     team1: string
     team2: string
     score1: string
@@ -10,6 +11,7 @@ export interface Match {
     flag2: string
     tournament_name: string
     tournament_icon: string
+    chatId : string
 }
 
 interface getMatchsProps {

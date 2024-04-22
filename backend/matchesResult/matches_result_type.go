@@ -12,7 +12,8 @@ type MatchesResult struct {
 	Tournament_name string    `json:"tournament_name"`
 	Match_page string    `json:"match_page"`
 	Tournament_icon string    `json:"tournament_icon"`
-
+	ChatId string    `json:"chatId"`
+	Id string    `json:"id"`
 }
 
 type MatchesResultData struct {

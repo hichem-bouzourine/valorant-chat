@@ -8,7 +8,7 @@ export const login = async (email: string, password: string) => {
         })
         const data = res.data
         localStorage.setItem('connectedUser', JSON.stringify(data?.user));
-        localStorage.setItem('token', JSON.stringify(data?.tokens));
+        localStorage.setItem('token', data?.tokens?.access);
         return res.data;
     } catch (error) {
         console.error(error)

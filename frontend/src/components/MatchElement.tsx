@@ -1,13 +1,17 @@
-import { Match } from "../services/Types"
+import { Match } from "../services/MatchService"
 
 interface MatchElementProps {
     match : Match
-    index : number
+    onClickMatch : (chatId: string, match: Match) => void
+    selectedMatch?: Match | null
 }
 
-const MatchElement = ({match, index} : MatchElementProps) => {
+
+const MatchElement = ({match, onClickMatch, selectedMatch} : MatchElementProps) => {
   return (
-    <div key={index} className="flex flex-row border-y rounded-md py-3 hover:cursor-pointer hover:bg-gray-700">
+    <div className={`flex flex-row border-y rounded-md py-3 hover:cursor-pointer hover:bg-gray-700 ${selectedMatch?.id === match.id ? 'bg-gray-700' : ''}`}
+        onClick={()=>onClickMatch(match.chatId, match)}
+    >
         <div className="flex flex-row justify-center items-center w-52">
             <p className="desc">{match.team1}</p>
         </div>

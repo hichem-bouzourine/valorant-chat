@@ -22,11 +22,11 @@ const Feed = () => {
                 >Don't waste your time and come enjoy with us..
             </p>
             {user && (
-                <div className='text-black bg-slate-400 hover:bg-slate-300 font-bold py-4 px-6 my-2 rounded' >
+                <div className='text-black bg-slate-400 hover:bg-slate-300 font-bold py-4 px-6 my-2 rounded hover:cursor-pointer' 
+                    onClick={() => window.location.href = '/matchs'}
+                >
                     <button>
-                        <Link to='/matchs'>
-                            Go to Matchs
-                        </Link>
+                        Go to Matchs
                     </button>
                 </div>
             )}

@@ -30,14 +30,11 @@ func GetChat(res http.ResponseWriter, req *http.Request) {
 		json.NewEncoder(res).Encode(CustomError(message, UNAUTHORIZED))
 		return
 	}
-
-	user, _ := req.Context().Value(CtxAuthKey{}).(*db.UserModel)
+	
+	// user, _ := req.Context().Value(CtxAuthKey{}).(*db.UserModel)
 	prisma, ctx := prisma.GetPrisma()
 	chat, err := prisma.Chat.FindFirst(
 		db.Chat.ID.Equals(id),
-		db.Chat.Users.Some(
-			db.User.ID.Equals(user.ID),
-		),
 	).With(
 		db.Chat.Users.Fetch(),
 		db.Chat.Messages.Fetch().With(
@@ -48,10 +45,11 @@ func GetChat(res http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		res.WriteHeader(http.StatusNotFound)
-		message := "Chat with ID '" + id + "' doesn't exist or you are not member of it." 
+		message := "Chat with ID '" + id + "'doesn't exist." 
 		json.NewEncoder(res).Encode(CustomError(message, NOT_FOUND))
 		return
 	}
+
 	users := ExtractChatUsersInformations(chat.Users())
 	messages := StructureMessages(chat.Messages())
 	chatStructure := ChatRes{
@@ -278,7 +276,7 @@ func SendMessageService(res http.ResponseWriter, req *http.Request) {
 	prisma, ctx := prisma.GetPrisma()
 	// Get a chat also fetch the users and messages
 	chat, err := prisma.Chat.FindFirst(
-		db.Chat.ID.Equals(id),
+		db.Chat.ID.Equals("clv5q7mud0000of7bprqa5u41"),
 		db.Chat.Users.Some(
 			db.User.ID.Equals(user.ID),
 		),

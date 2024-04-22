@@ -57,7 +57,10 @@ func GetMatchesResultsFromDB(res http.ResponseWriter, req *http.Request) {
 			Tournament_name: r.TournamentName,
 			Match_page: r.MatchPage,
 			Tournament_icon: r.TournamentIcon,
+			ChatId: r.ChatID,
+			Id: r.ID,
         })
+
     }
 
 	response := responseGetMatchesResults {
