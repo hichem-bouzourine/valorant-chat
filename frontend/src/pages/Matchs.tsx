@@ -14,9 +14,11 @@ const Matchs = () => {
     const [chat, setChat] = useState<Chat | null>(null)
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
 
-    if (!user) {
-        Navigate({to: '/'})
-    }
+    useEffect(() => {
+        if (!user) {
+            Navigate({to: '/'})
+        }
+    }, [])
 
     useEffect(() => {
         getMatchs({setMatchs})
@@ -28,9 +30,6 @@ const Matchs = () => {
         setSelectedMatch(match)
     }
     
-
-    // !!!!! a regler, logout matchs
-
     return (
         <div className="flex flex-col items-center bg-gray-800 h-screen">
             <div className="w-screen">
