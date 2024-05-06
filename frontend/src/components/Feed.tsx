@@ -8,16 +8,18 @@ const Feed = () => {
 
   return (
     <section className="w-full flex flex-col items-center gap-3">
-        <h1 className="head_text text-center">
-            Vote & Discuss about
-            <br className="max-md:hidden"/> {/* from 0 -> md : hidden */}
+        <h1 className="text-center">
+            <span className="head_text">
+                Vote & Discuss about
+            </span>
+            <br/> 
             <span className="orange_gradient text-center">Valorant Match Results</span>
         </h1>
         <p className="desc text-center">Our amazing plateform will let you vote your favorite team
         and let you discuss the match's details with passionate people like you!
         </p>
 
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-6">
             <p
                 className="text-center text-slate-400 text-2xl"
                 >Don't waste your time and come enjoy with us..
@@ -48,7 +50,7 @@ const Feed = () => {
             
             </div>
         </div>
-        <div className="my-2 w-2/3 h-1/2 flex justify-center items-center">
+        <div className="my-2 w-full h-full lg:w-2/3 lg:h-1/2 flex justify-center items-center">
             <img
                 className="w-1/2 h-1/2 rounded-lg shadow-lg border-2 border-gray-200"
                 src="/feed-team.png"

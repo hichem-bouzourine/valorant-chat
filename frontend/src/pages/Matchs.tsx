@@ -8,6 +8,7 @@ import { getMatchs } from "../services/MatchService"
 import { Chat, getChat } from "../services/ChatService"
 import ChatBox from "../components/ChatBox"
 import { useWebSocket } from "../context/WebSocketProvider"
+import Footer from "../components/Footer"
 
 const Matchs = () => {
     const {user} = useAuth()
@@ -37,9 +38,9 @@ const Matchs = () => {
         getMatchs({setMatchs})
     }, [])
 
-
+// ${chat ? "h-full" : "h-screen"}
     return (
-        <div className="flex flex-col items-center bg-gray-800 h-screen">
+        <div className={`flex flex-col items-center bg-gray-800 ${chat ? "h-full" : "h-screen"} lg:h-screen`}>
             <div className="w-screen">
                 <NavBar />
             </div>
@@ -47,17 +48,17 @@ const Matchs = () => {
                 Select a match and join the discussion
             </div>
             <div className="w-5/6">
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-col lg:flex-row gap-4">
 
                     {chat  && (
-                        <div className="w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
+                        <div className=" lg:w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
                             <ChatBox chat={chat} />
                         </div>
                     )
                     }
                 
-                    <div className={`overflow-auto max-h-[800px] ${chat ? `w-8/12` : "w-full"}`}>
-                        <div className="flex flex-col justify-center items-center gap-2 ">
+                    <div className={`overflow-auto max-h-[800px] ${chat ? ` lg:w-8/12` : "w-full"}`}>
+                        <div className="flex flex-col justify-center items-center gap-2 overflow-auto">
                             {matchs.map((match, index) => (
                                 <MatchElement match={match} key={index} onClickMatch={onClickMatch} selectedMatch={selectedMatch}/>
                             ))}
