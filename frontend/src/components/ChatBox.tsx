@@ -1,27 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Chat, Message } from "../services/ChatService";
 import MessageBox from "./Message";
-import useWebSocket from "../services/WebSocketService";
 
 interface ChatBoxProps {
     chat: Chat | null
+    socket? : WebSocket | null, 
+    socketIsOpen?: boolean, 
+    error? : Event | null
+    sendEvent : ((event : string, data : any) => void) | null
 }
 
-const ChatBox = ({chat}: ChatBoxProps) => {
+const ChatBox = ({chat, socket, socketIsOpen, sendEvent, error}: ChatBoxProps) => {
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [messageInput, setMessageInput] = useState<string>('');
     const [messages, setMessages] = useState<Message[] | undefined>(chat?.messages);
  
-    const {socket, socketIsOpen, error, sendEvent} = useWebSocket(`${import.meta.env.VITE_BACKEND_WS_URL}?Authorization=Bearer ${localStorage.getItem("token")}`)
-
     useEffect(() => {
         // If there is an websocket error, return
         if (error) return;
-
-        if (socket && socketIsOpen && chat) {
-          // Subscribe to the chat using the sendEvent function
-          sendEvent("subscribe", { chat_id: chat?.id });
-        }
 
     }, [socketIsOpen, chat]);
 
@@ -50,7 +46,7 @@ const ChatBox = ({chat}: ChatBoxProps) => {
 
     const sendMessage = () => {  
         // If the socket is open and there is a chat and a message input send the message
-        if (socketIsOpen && chat && messageInput) {
+        if (socketIsOpen && chat && messageInput && (sendEvent !== null)) {
           sendEvent("send_message", { chat_id: chat?.id, content: messageInput });
         }
       

@@ -7,12 +7,25 @@ import MatchElement from "../components/MatchElement"
 import { getMatchs } from "../services/MatchService"
 import { Chat, getChat } from "../services/ChatService"
 import ChatBox from "../components/ChatBox"
+// import useWebSocket from "../services/WebSocketService"
+import { useWebSocket } from "../context/WebSocketProvider"
 
 const Matchs = () => {
     const {user} = useAuth()
+    const {socket, socketIsOpen, error, sendEvent} = useWebSocket()
     const [matchs, setMatchs] = useState<Match[]>([])
     const [chat, setChat] = useState<Chat | null>(null)
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
+
+    const onClickMatch = (chatId : string, match : Match) => {
+        getChat({chatId, setChat})
+        setSelectedMatch(match)
+        console.log(socketIsOpen)
+        if (socket && socketIsOpen ) {
+            // Subscribe to the chat using the sendEvent function
+            sendEvent("subscribe", { chat_id: chatId });
+        }
+    }
 
     useEffect(() => {
         if (!user) {
@@ -25,11 +38,6 @@ const Matchs = () => {
     }, [])
 
 
-    const onClickMatch = (chatId : string, match : Match) => {
-        getChat({chatId, setChat})
-        setSelectedMatch(match)
-    }
-    
     return (
         <div className="flex flex-col items-center bg-gray-800 h-screen">
             <div className="w-screen">
@@ -41,7 +49,7 @@ const Matchs = () => {
             <div className="w-5/6">
                 <div className="flex flex-row gap-4">
                     <div className="w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
-                        <ChatBox chat={chat} />
+                        <ChatBox chat={chat} socket={socket} socketIsOpen sendEvent={user ? sendEvent: null} error={error}/>
                     </div>
                 
                     <div className="overflow-auto max-h-[800px] w-8/12">

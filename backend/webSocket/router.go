@@ -83,6 +83,7 @@ func createSocketRouter() *Router {
 	// assign handler for each event
 	router.Handle("subscribe", subscribe)
 	router.Handle("send_message", sendMessage)
+	router.Handle("unsubscribe", unsubscribe)
 	return router
 }
 

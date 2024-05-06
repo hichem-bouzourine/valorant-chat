@@ -20,16 +20,29 @@ func subscribe(client *Client, d interface{}) {
 		client.rt.AddHub(chat_id)
 	}
 
-	// in a separate Thread we push a message for the event
-	go func() {
-		client.send <- Message{Event: "registered_chat", Data: responseRegisterToChat{
-			Message: "Registered correctly",
-		}}
-	}()
-	client.Write() // write to make sure that others has received the message 
 	hub, _ := client.rt.hubs[chat_id]
+	if client.IsSubscribedToHub(hub) == true {
+		return
+	}
+
+	msg := Message{Event: "registered_chat", Data: responseRegisterToChat{
+		Message: "Registered correctly",
+		Chat_id: chat_id,
+	}}
+	client.Emit(msg)
+
+	client.AddSubscribedHub(hub)
 	hub.register <- client
 
+}
+
+// basically, we're going to remove the client from all the hubs it's subscribed to
+func unsubscribe(client *Client, d interface{}) {
+	for _, hub := range client.SubscribedHubs {
+		hub.RemoveClient(client)
+	}
+	// close the client one time!
+	close(client.send)
 }
 
 func sendMessage(client *Client, d interface{}) {
@@ -70,5 +83,4 @@ func sendMessage(client *Client, d interface{}) {
 			Data:  structured_message,
 		}
 	}()
-
 }

@@ -9,9 +9,9 @@ const NavBar: React.FC = () => {
     <nav>
         <div className='flex flex-row justify-between items-center py-4'>
             <div className='mx-6'>
-                <a href="/">
+                <Link to="/">
                     <img src='/valorant.png' alt='logo' className='w-14' />
-                </a>
+                </Link>
             </div>
             <div className='mx-6'>
                 {user ? (

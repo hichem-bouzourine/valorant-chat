@@ -1,9 +1,10 @@
 // import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider";
 
 const Feed = () => {
     const {user} = useAuth();
+    const navigate = useNavigate();
 
   return (
     <section className="w-full flex flex-col items-center gap-3">
@@ -23,7 +24,7 @@ const Feed = () => {
             </p>
             {user && (
                 <div className='text-black bg-slate-400 hover:bg-slate-300 font-bold py-4 px-6 my-2 rounded hover:cursor-pointer' 
-                    onClick={() => window.location.href = '/matchs'}
+                    onClick={() => navigate('/matchs')}
                 >
                     <button>
                         Go to Matchs

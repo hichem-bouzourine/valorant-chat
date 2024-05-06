@@ -3,7 +3,7 @@ package webSocket
 /*
 	Hub to implement Join and left room in websockets
 */
-// source: Tabellout
+// source: Youtube + Tabellout
 
 // NewHub initialise un nouveau hub.
 func NewHub() *Hub {
@@ -18,13 +18,13 @@ func NewHub() *Hub {
 // Subscribe a client into our hub.
 func (h *Hub) AddClient(client *Client) {
 	h.clients[client] = true
-	client.SubscribedHubs = append(client.SubscribedHubs, h) 
+	client.SubscribedHubs = append(client.SubscribedHubs, h)
 }
+
 // unsubscribe a client from our hub. 
 func (h *Hub) RemoveClient(client *Client) {
 	if _, ok := h.clients[client]; ok {
 		delete(h.clients, client)
-		close(client.send)
 	}
 }
 
@@ -34,13 +34,11 @@ func (h *Hub) run() {
 		case client := <-h.register:
 			h.AddClient(client)
 		case client := <-h.unregister:
-			h.RemoveClient(client)
+			delete(h.clients, client)
+			// close(client.send)
 		case message := <-h.broadcast:
 			for client := range h.clients {
-				go func(c *Client) {
-					c.send <- message
-				}(client)
-				client.Write()
+				client.Emit(message)
 			}
 		}
 	}

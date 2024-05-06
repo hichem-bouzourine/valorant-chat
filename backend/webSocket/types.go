@@ -8,16 +8,18 @@ import (
 
 type responseRegisterToChat struct {
 	Message string `json:"message"`
+	Chat_id 	string `json:"chat_id"`
 }
 
+// We consider Hub as a chat room,
 type Hub struct {
-	// Registered clients.
+	// many clients could be connected to a hub
 	clients map[*Client]bool
 
-	// Inbound messages from the clients.
+	// In order to broadcast a message to all clients connected to the hub
 	broadcast chan Message
 
-	// Register requests from the clients.
+	// Register requests from clients.
 	register chan *Client
 
 	// Unregister requests from clients.
