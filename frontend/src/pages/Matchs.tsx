@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
 import NavBar from "../components/NavBar"
 import { useEffect, useState } from "react"
@@ -15,6 +15,7 @@ const Matchs = () => {
     const [matchs, setMatchs] = useState<Match[]>([])
     const [chat, setChat] = useState<Chat | null>(null)
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
+    const navigate = useNavigate()
 
     const onClickMatch = (chatId : string, match : Match) => {
         getChat({chatId, setChat})
@@ -28,7 +29,7 @@ const Matchs = () => {
 
     useEffect(() => {
         if (!user) {
-            Navigate({to: '/'})
+            navigate('/')
         }
     }, [])
 

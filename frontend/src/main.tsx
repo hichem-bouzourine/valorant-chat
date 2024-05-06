@@ -22,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path="/" element={<App />} errorElement={<Error />} /> {/* 👈 Renders at /app/ */}
               <Route path="/login" element={<Login />} errorElement={<Error />} /> {/* 👈 Renders at /login/ */}
               <Route path="/matchs" element={<Matchs />} errorElement={<Error />} /> {/* 👈 Renders at /matchs/ */}
+              <Route path='*' element={<Error />} /> {/* 👈 Renders at any other route */}
             </Routes>
           </WebSocketConnection>
         </AuthProvider>
