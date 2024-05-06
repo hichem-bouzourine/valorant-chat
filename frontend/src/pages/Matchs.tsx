@@ -48,11 +48,15 @@ const Matchs = () => {
             </div>
             <div className="w-5/6">
                 <div className="flex flex-row gap-4">
-                    <div className="w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
-                        <ChatBox chat={chat} />
-                    </div>
+
+                    {chat  && (
+                        <div className="w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
+                            <ChatBox chat={chat} />
+                        </div>
+                    )
+                    }
                 
-                    <div className="overflow-auto max-h-[800px] w-8/12">
+                    <div className={`overflow-auto max-h-[800px] ${chat ? `w-8/12` : "w-full"}`}>
                         <div className="flex flex-col justify-center items-center gap-2 ">
                             {matchs.map((match, index) => (
                                 <MatchElement match={match} key={index} onClickMatch={onClickMatch} selectedMatch={selectedMatch}/>
