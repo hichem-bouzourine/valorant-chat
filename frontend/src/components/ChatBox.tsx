@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Chat, Message } from "../services/ChatService";
 import MessageBox from "./Message";
 import { useWebSocket } from "../context/WebSocketProvider";
@@ -43,7 +43,8 @@ const ChatBox = ({chat}: ChatBoxProps) => {
         }
     }, [chat]);
 
-    const sendMessage = () => {  
+    const sendMessage = (e: FormEvent) => {
+        e.preventDefault();  
         // If the socket is open and there is a chat and a message input send the message
         if (socketIsOpen && chat && messageInput && (sendEvent !== null)) {
           sendEvent("send_message", { chat_id: chat?.id, content: messageInput });
@@ -69,17 +70,19 @@ const ChatBox = ({chat}: ChatBoxProps) => {
                     }
                 {/* </div> */}
             </div>
-            <div className="p-2 my-2 flex flex-row justify-between gap-5 rounded-lg">
+            <form className="p-2 my-2 flex flex-row justify-between gap-5 rounded-lg" onSubmit={sendMessage}>
                 <input type="text" placeholder="Type a message" className="w-full rounded-lg p-2 text-slate-700"
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)} 
                 />
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => {sendMessage()}}
+                <button 
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    // onClick={() => {sendMessage()}}
                 >
                     Send
                 </button>
-            </div>
+            </form>
         </div>
     )
 }
