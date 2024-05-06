@@ -8,7 +8,6 @@ import { getMatchs } from "../services/MatchService"
 import { Chat, getChat } from "../services/ChatService"
 import ChatBox from "../components/ChatBox"
 import { useWebSocket } from "../context/WebSocketProvider"
-import Footer from "../components/Footer"
 
 const Matchs = () => {
     const {user} = useAuth()
@@ -38,7 +37,6 @@ const Matchs = () => {
         getMatchs({setMatchs})
     }, [])
 
-// ${chat ? "h-full" : "h-screen"}
     return (
         <div className={`flex flex-col items-center bg-gray-800 ${chat ? "h-full" : "h-screen"} lg:h-screen`}>
             <div className="w-screen">
