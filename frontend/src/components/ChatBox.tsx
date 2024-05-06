@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Chat, Message } from "../services/ChatService";
 import MessageBox from "./Message";
+import { useWebSocket } from "../context/WebSocketProvider";
 
 interface ChatBoxProps {
     chat: Chat | null
-    socket? : WebSocket | null, 
-    socketIsOpen?: boolean, 
-    error? : Event | null
-    sendEvent : ((event : string, data : any) => void) | null
 }
 
-const ChatBox = ({chat, socket, socketIsOpen, sendEvent, error}: ChatBoxProps) => {
+const ChatBox = ({chat}: ChatBoxProps) => {
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [messageInput, setMessageInput] = useState<string>('');
     const [messages, setMessages] = useState<Message[] | undefined>(chat?.messages);
+    const {socket, socketIsOpen, error, sendEvent} = useWebSocket()
+   
  
     useEffect(() => {
         // If there is an websocket error, return

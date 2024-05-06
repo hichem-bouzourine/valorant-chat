@@ -7,7 +7,6 @@ import MatchElement from "../components/MatchElement"
 import { getMatchs } from "../services/MatchService"
 import { Chat, getChat } from "../services/ChatService"
 import ChatBox from "../components/ChatBox"
-// import useWebSocket from "../services/WebSocketService"
 import { useWebSocket } from "../context/WebSocketProvider"
 
 const Matchs = () => {
@@ -49,7 +48,7 @@ const Matchs = () => {
             <div className="w-5/6">
                 <div className="flex flex-row gap-4">
                     <div className="w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
-                        <ChatBox chat={chat} socket={socket} socketIsOpen sendEvent={user ? sendEvent: null} error={error}/>
+                        <ChatBox chat={chat} />
                     </div>
                 
                     <div className="overflow-auto max-h-[800px] w-8/12">
