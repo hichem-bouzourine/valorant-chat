@@ -4,8 +4,16 @@ import (
 	db "pc3r/prisma/db"
 )
 
-// Ce découpage été inspiré par Tabellout Yanis.
+type SubscribeNewsletterSchema struct {
+	Email string `json:"email"`
+}
 
+type NewsletterResponse struct {
+	Code   string    `json:"code"`
+	Message string `json:"message"`
+}
+
+// Ce découpage été inspiré par Tabellout Yanis.
 type LoginSchema struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`

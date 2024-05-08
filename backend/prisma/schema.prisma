@@ -59,3 +59,10 @@ model Message {
     user_id    String
     user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
+
+model newsLetter {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
