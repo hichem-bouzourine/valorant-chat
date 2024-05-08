@@ -10,10 +10,10 @@ const Feed = () => {
     <section className="w-full flex flex-col items-center gap-3">
         <h1 className="text-center">
             <span className="head_text">
-                Vote & Discuss about
+                Join us to discuss about
             </span>
             <br/> 
-            <span className="orange_gradient text-center">Valorant Match Results</span>
+            <span className="orange_gradient text-center lg:text-3xl">Valorant Match Results</span>
         </h1>
         <p className="desc text-center">Our amazing plateform will let you vote your favorite team
         and let you discuss the match's details with passionate people like you!

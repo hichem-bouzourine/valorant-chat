@@ -42,7 +42,7 @@ const Matchs = () => {
             <div className="w-screen">
                 <NavBar />
             </div>
-            <div className="orange_gradient text-5xl mb-8">
+            <div className="orange_gradient text-5xl mb-8 md:text-xl lg:text-4xl">
                 Select a match and join the discussion
             </div>
             <div className="w-5/6">

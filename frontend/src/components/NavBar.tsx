@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthProvider';
 
 const NavBar: React.FC = () => {
     
-    const { user, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <nav>
