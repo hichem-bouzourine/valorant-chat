@@ -98,8 +98,22 @@ func signup(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// l'utilisateur est bien connecté, lui envoyer les jettons de connections
+	userStruct := UserRes{
+		UserModel: new_user,
+	}
+	accesToken, _, _ := jwt.CreateToken(new_user.ID)
+	tokens := AuthTokens{
+		Access: accesToken,
+	}
+	// Construire la réponse JSON
+	response := LoginRes{
+		User:   userStruct, // Assigner la structure User à response.User
+		Tokens: tokens,
+	}
+
 	res.WriteHeader(http.StatusCreated)
-	json.NewEncoder(res).Encode(SignupRes{Message: "User Created", Success: true, Id: new_user.ID})
+	json.NewEncoder(res).Encode(response)
 
 }
 
