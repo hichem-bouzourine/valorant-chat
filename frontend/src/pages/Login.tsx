@@ -1,13 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
-import { login } from "../services/AuthService";
+import { login, register } from "../services/AuthService";
 import { useAuth } from "../context/AuthProvider";
+import { validateEmail, validatePassword } from "../utils";
+import LoginBox from "../components/LoginBox";
+import RegisterBox from "../components/RegisterBox";
+
+interface Error {
+    message: string;
+    code : string;
+}
 
 const Login = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [email, setEmail] = useState('hichem.bouzourine@etu.sorbonne-universite.fr');
     const [password, setPassword] = useState('projet_pc3r');
+    const [error, setError] = useState<Error>()
+    const [Login, setLogin] = useState<boolean>(true);
+    const [name, setName] = useState<string>('')
 
     useEffect(() => {
         // Check if user is logged in after successful login
@@ -16,12 +27,14 @@ const Login = () => {
         }
     }, [user, navigate]);
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleLoginSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // regex for email validation
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!emailRegex.test(email)) {
-            alert('Please enter a valid email');
+        if (!validateEmail(email)){
+            return;
+        }
+
+        if (!validatePassword(password)){
             return;
         }
         
@@ -30,7 +43,34 @@ const Login = () => {
             window.location.href = '/';
             // navigate('/');
         }else {
-            console.log('error');
+            setError(data.response.data.error)
+        }
+    }
+
+    const handleRegisterSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        if (!name) {
+            alert('Please enter your name');
+            return;
+        }
+        if (!password) {
+            alert('Please enter a password');
+            return;
+        }
+        
+        if (!validateEmail(email)){
+            return;
+        }
+
+        if (!validatePassword(password)){
+            return;
+        }
+        
+        const data = await register(email, password, name);
+        if (data?.tokens) {
+            navigate('/');
+        }else {
+            setError(data.response.data.error)
         }
     }
     
@@ -40,30 +80,32 @@ const Login = () => {
                 <img src={"/valorant.png"} alt="" />
             </div>
             <div className="flex flex-col items-center justify-center w-2/5 h-2/5 shadow-slate-400">
-                <h1 className="text-3xl font-bold text-red-500">Login</h1>
-                <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-                    <input
-                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-100"
-                        type="text"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button 
-                        type="submit"
-                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 hover:cursor-pointer"
-                        // onClick={handleSubmit}
-                        >
-                        Login
-                    </button>
-                </form>
+                    {Login && (
+                        <LoginBox 
+                            email={email}
+                            setEmail={setEmail}
+                            password={password}
+                            setPassword={setPassword}
+                            error={error}
+                            setError={setError}
+                            setLogin={setLogin}
+                            handleLoginSubmit={handleLoginSubmit}
+                        />
+                    )}
+                    {!Login && (
+                        <RegisterBox 
+                            email={email}
+                            setEmail={setEmail}
+                            password={password}
+                            setPassword={setPassword}
+                            error={error}
+                            setError={setError}
+                            setLogin={setLogin}
+                            handleRegisterSubmit={handleRegisterSubmit}
+                            name={name}
+                            setName={setName}
+                        />
+                    )}
             </div>
         </div>
     );
