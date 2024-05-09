@@ -41,7 +41,6 @@ const Login = () => {
         const data = await login(email, password);
         if (data?.tokens) {
             window.location.href = '/';
-            // navigate('/');
         }else {
             setError(data.response.data.error)
         }
@@ -68,7 +67,7 @@ const Login = () => {
         
         const data = await register(email, password, name);
         if (data?.tokens) {
-            navigate('/');
+            window.location.href = '/';
         }else {
             setError(data.response.data.error)
         }
