@@ -20,7 +20,7 @@ func PushData() {
 	}
 
 	for _, matchResult := range matches {
-
+		fmt.Println("Pushing data for match: ", matchResult.Team1, " vs ", matchResult.Team2)
 		_, err :=  matchesResult.PushMatchesResults(matchResult, time.Now())
 
 		if err != nil {
@@ -29,5 +29,5 @@ func PushData() {
 		}
 	}
 	
-
+	fmt.Println("Data pushed successfully into the database")
 }

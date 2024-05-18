@@ -42,7 +42,7 @@ func main() {
 	// Push data once in a hour
 	
 	sched := gocron.NewScheduler()
-	sched.Every(1).Hour().Do(func() {
+	sched.Every(24).Hour().Do(func() {
 		database.PushData()
 	})
 	

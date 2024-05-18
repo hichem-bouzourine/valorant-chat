@@ -34,7 +34,7 @@ func GetMatchesResultFromAPI() ([]MatchesResult, error) {
 	godotenv.Load(".env")
 	BASE_URL := os.Getenv("API_BASE_URL")	
 
-	URL := fmt.Sprintf("%s%s",BASE_URL, "match/results")
+	URL := fmt.Sprintf("%s%s",BASE_URL, "match?q=results")
 	res, err := fetchFromUrl(URL)
 	if err != nil {
 		fmt.Println("Error occured when retrieving data from API")
