@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	database "pc3r/database"
 	"pc3r/prisma"
 	"pc3r/services"
@@ -32,8 +33,10 @@ func main() {
 	
 	// lancer le serveur dans un Thread séparé pour maximiser la concurrence
 	go func() {
-		fmt.Println("Server running on PORT 5000")
-		err := http.ListenAndServe(":5000", handler)
+		port := envPortOr("5000")
+		fmt.Println("Server running on PORT ",port)
+
+		err := http.ListenAndServe(port, handler)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -51,4 +54,11 @@ func main() {
 	
 	select{}
 }
-
+func envPortOr(port string) string {
+	// If `PORT` variable in environment exists, return it
+	if envPort := os.Getenv("PORT"); envPort != "" {
+	  return ":" + envPort
+	}
+	// Otherwise, return the value of `port` variable from function argument
+	return ":" + port
+  }
