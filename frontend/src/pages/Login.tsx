@@ -19,6 +19,7 @@ const Login = () => {
     const [error, setError] = useState<Error>()
     const [Login, setLogin] = useState<boolean>(true);
     const [name, setName] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         // Check if user is logged in after successful login
@@ -29,6 +30,7 @@ const Login = () => {
 
     const handleLoginSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         // regex for email validation
         if (!validateEmail(email)){
             return;
@@ -44,10 +46,12 @@ const Login = () => {
         }else {
             setError(data.response.data.error)
         }
+        setLoading(false);
     }
 
     const handleRegisterSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         if (!name) {
             alert('Please enter your name');
             return;
@@ -71,6 +75,7 @@ const Login = () => {
         }else {
             setError(data.response.data.error)
         }
+        setLoading(false);
     }
     
     return (
@@ -88,6 +93,7 @@ const Login = () => {
                             error={error}
                             setError={setError}
                             setLogin={setLogin}
+                            loading={loading}
                             handleLoginSubmit={handleLoginSubmit}
                         />
                     )}
@@ -100,6 +106,7 @@ const Login = () => {
                             error={error}
                             setError={setError}
                             setLogin={setLogin}
+                            loading={loading}
                             handleRegisterSubmit={handleRegisterSubmit}
                             name={name}
                             setName={setName}
