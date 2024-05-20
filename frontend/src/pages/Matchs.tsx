@@ -50,7 +50,7 @@ const Matchs = () => {
 
                     {chat  && (
                         <div className=" lg:w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
-                            <ChatBox chat={chat} />
+                            <ChatBox chat={chat} setChat={setChat}/>
                         </div>
                     )
                     }

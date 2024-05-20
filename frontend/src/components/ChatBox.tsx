@@ -5,9 +5,10 @@ import { useWebSocket } from "../context/WebSocketProvider";
 
 interface ChatBoxProps {
     chat: Chat | null
+    setChat ?: React.Dispatch<React.SetStateAction<Chat | null>>
 }
 
-const ChatBox = ({chat}: ChatBoxProps) => {
+const ChatBox = ({chat, setChat}: ChatBoxProps) => {
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [messageInput, setMessageInput] = useState<string>('');
     const [messages, setMessages] = useState<Message[] | undefined>(chat?.messages);
@@ -56,6 +57,11 @@ const ChatBox = ({chat}: ChatBoxProps) => {
     return (
         <div className="flex flex-col justify-center">
             <div className="flex flex-row justify-between gap-5 p-2 border-b">
+                <div className="flex flex-col justify-center items-center">
+                    <button className="bg-red-500 rounded-full p-2 px-4 hover:cursor-pointer"
+                        onClick={() => {if (chat && setChat) {setChat(null)}}}
+                    >X</button>
+                </div>
                 <div className="flex justify-center items-center orange_gradient">{chat?.name}</div>
                 <div className="w-12">
                     <img src={chat?.photo} alt="chat img" />
@@ -78,7 +84,6 @@ const ChatBox = ({chat}: ChatBoxProps) => {
                 <button 
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    // onClick={() => {sendMessage()}}
                 >
                     Send
                 </button>
