@@ -8,6 +8,8 @@ import { getMatchs } from "../services/MatchService"
 import { Chat, getChat } from "../services/ChatService"
 import ChatBox from "../components/ChatBox"
 import { useWebSocket } from "../context/WebSocketProvider"
+import { BallTriangle } from 'react-loader-spinner'
+
 
 const Matchs = () => {
     const {user} = useAuth()
@@ -15,11 +17,13 @@ const Matchs = () => {
     const [matchs, setMatchs] = useState<Match[]>([])
     const [chat, setChat] = useState<Chat | null>(null)
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
+    const [loadingMatchs, setLoadingMatchs] = useState<boolean>(true)
     const navigate = useNavigate()
 
     const onClickMatch = (chatId : string, match : Match) => {
         getChat({chatId, setChat})
-        setSelectedMatch(match)
+        setSelectedMatch(match)            
+        setLoadingMatchs(false)
         console.log(socketIsOpen)
         if (socket && socketIsOpen ) {
             // Subscribe to the chat using the sendEvent function
@@ -60,6 +64,12 @@ const Matchs = () => {
                             {matchs.map((match, index) => (
                                 <MatchElement match={match} key={index} onClickMatch={onClickMatch} selectedMatch={selectedMatch}/>
                             ))}
+                            {loadingMatchs && (
+                                <div className="flex justify-center items-center">
+                                    <BallTriangle color="#ffffff" height={50} width={50} />
+                                </div>
+                            )
+                            }
                         </div>
                     </div>
                 </div>
