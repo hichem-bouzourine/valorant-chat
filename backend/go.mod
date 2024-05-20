@@ -12,7 +12,4 @@ require (
 	github.com/steebchen/prisma-client-go v0.37.0
 )
 
-require (
-	github.com/stretchr/testify v1.9.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
-)
+require golang.org/x/net v0.17.0 // indirect

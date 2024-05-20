@@ -1,7 +1,7 @@
 datasource db {
   // could be postgresql or mysql
   provider = "postgres"
-  url      = "postgres://postgres.ylxlyubijzvuijihvmjk:projet_pc3r@aws-0-eu-central-1.pooler.supabase.com:5432/postgres?connect_timeout=300"
+  url      = env("DATABASE_URL")
 }
  
 generator db {
