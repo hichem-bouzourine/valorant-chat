@@ -14,8 +14,8 @@ interface Error {
 const Login = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const [email, setEmail] = useState('hichem.bouzourine@etu.sorbonne-universite.fr');
-    const [password, setPassword] = useState('projet_pc3r');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState<Error>()
     const [Login, setLogin] = useState<boolean>(true);
     const [name, setName] = useState<string>('')
@@ -33,10 +33,12 @@ const Login = () => {
         setLoading(true);
         // regex for email validation
         if (!validateEmail(email)){
+            setLoading(false);
             return;
         }
 
         if (!validatePassword(password)){
+            setLoading(false);
             return;
         }
         
@@ -62,10 +64,12 @@ const Login = () => {
         }
         
         if (!validateEmail(email)){
+            setLoading(false);
             return;
         }
 
         if (!validatePassword(password)){
+            setLoading(false);
             return;
         }
         
