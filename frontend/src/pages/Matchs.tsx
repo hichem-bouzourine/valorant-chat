@@ -73,8 +73,9 @@ const Matchs = () => {
                         type="search" 
                         name="search" 
                         id="search" 
-                        className="rounded-lg outline-none p-2 w-5/12 h-10 bg-slate-500" 
-                        value={search} 
+                        className="rounded-lg outline-none p-2 w-5/12 h-10 bg-slate-500 text-slate-800 text-xl md:text-lg lg:text-2xl" 
+                        value={search}
+                        placeholder="Search for a team..." 
                         onChange={(e) => {searchMatchs(e.target.value)}} 
                     />
                 </div>

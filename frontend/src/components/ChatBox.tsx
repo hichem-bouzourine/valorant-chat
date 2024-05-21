@@ -71,7 +71,7 @@ const ChatBox = ({chat, setChat}: ChatBoxProps) => {
                 {/* <div className="max-h-[500px]"> */}
                     {
                         messages?.slice().reverse().map((message, index) => (
-                            <MessageBox key={index} user={message.user} content={message.content} />
+                            <MessageBox key={index} user={message.user} content={message.content} created_at={message.created_at} />
                         ))
                     }
                 {/* </div> */}
