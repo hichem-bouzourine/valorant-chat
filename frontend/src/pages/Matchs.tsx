@@ -100,7 +100,7 @@ const Matchs = () => {
                 
                     <div className={`overflow-auto max-h-[800px] ${chat ? ` lg:w-8/12` : "w-full"}`}>
                         <div className="flex flex-col justify-center items-center gap-2 overflow-auto">
-                            {loadingMatchs && (
+                            {loadingMatchs || filteredMatchs.length == 0 && (
                                 <div className="flex justify-center items-center">
                                     <BallTriangle color="#ffffff" height={50} width={50} />
                                 </div>
