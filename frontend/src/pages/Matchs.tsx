@@ -73,7 +73,7 @@ const Matchs = () => {
                         type="search" 
                         name="search" 
                         id="search" 
-                        className="rounded-lg outline-none p-2 w-5/12 h-10 bg-slate-500 text-slate-800 text-xl md:text-lg lg:text-2xl" 
+                        className="rounded-lg outline-none p-2 w-5/12 h-10 bg-slate-600 text-slate-700 text-xl md:text-lg lg:text-2xl" 
                         value={search}
                         placeholder="Search for a team..." 
                         onChange={(e) => {searchMatchs(e.target.value)}} 
@@ -85,19 +85,8 @@ const Matchs = () => {
                 Select a match and join the discussion
             </div> */}
             <div className="w-5/6">
-                <div className="flex flex-col lg:flex-row gap-4">
-                    {loadingChat && (
-                        <div className="flex justify-center items-center">
-                            <BallTriangle color="#ffffff" height={50} width={50} />
-                        </div>
-                    )}
-                    {chat  && (
-                        <div className=" lg:w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
-                            <ChatBox chat={chat} setChat={setChat}/>
-                        </div>
-                    )
-                    }
-                
+                <div className="flex flex-col-reverse lg:flex-row gap-4">
+                    
                     <div className={`overflow-auto max-h-[800px] ${chat ? ` lg:w-8/12` : "w-full"}`}>
                         <div className="flex flex-col justify-center items-center gap-2 overflow-auto">
                             {loadingMatchs || filteredMatchs.length == 0 && (
@@ -110,6 +99,18 @@ const Matchs = () => {
                             ))}
                         </div>
                     </div>
+                    {loadingChat && (
+                        <div className="flex justify-center items-center">
+                            <BallTriangle color="#ffffff" height={50} width={50} />
+                        </div>
+                    )}
+                    {chat  && (
+                        <div className=" lg:w-4/12 text-white border border-gray-500 rounded-lg max-h-[650px]">
+                            <ChatBox chat={chat} setChat={setChat}/>
+                        </div>
+                    )
+                    }
+                
                 </div>
             </div>
         </div>
