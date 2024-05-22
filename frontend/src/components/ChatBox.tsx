@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { Chat, Message } from "../services/ChatService";
 import MessageBox from "./Message";
 import { useWebSocket } from "../context/WebSocketProvider";
+import { useAuth } from "../context/AuthProvider";
 
 interface ChatBoxProps {
     chat: Chat | null
@@ -13,6 +14,8 @@ const ChatBox = ({chat, setChat}: ChatBoxProps) => {
     const [messageInput, setMessageInput] = useState<string>('');
     const [messages, setMessages] = useState<Message[] | undefined>(chat?.messages);
     const {socket, socketIsOpen, error, sendEvent} = useWebSocket()
+
+    const {user} = useAuth()
    
  
     useEffect(() => {
@@ -67,11 +70,17 @@ const ChatBox = ({chat, setChat}: ChatBoxProps) => {
                     <img src={chat?.photo} alt="chat img" />
                 </div>
             </div>
-            <div ref={chatBoxRef} className="ml-2 flex flex-col-reverse border-b h-[500px] overflow-auto">
+            <div ref={chatBoxRef} className="ml-2 flex flex-col-reverse border-b h-[500px] overflow-y">
                 {/* <div className="max-h-[500px]"> */}
                     {
                         messages?.slice().reverse().map((message, index) => (
-                            <MessageBox key={index} user={message.user} content={message.content} created_at={message.created_at} />
+                            <MessageBox 
+                                key={index} 
+                                user={message.user} 
+                                content={message.content} 
+                                created_at={message.created_at} 
+                                isOwnMessage={message.user.id === JSON.parse(user).id}
+                                />
                         ))
                     }
                 {/* </div> */}
