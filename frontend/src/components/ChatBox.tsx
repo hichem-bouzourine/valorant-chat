@@ -1,15 +1,17 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Chat, Message } from "../services/ChatService";
-import MessageBox from "./Message";
+import MessageBox from "./MessageBox";
 import { useWebSocket } from "../context/WebSocketProvider";
 import { useAuth } from "../context/AuthProvider";
+import { User } from "../services/ChatService";
 
 interface ChatBoxProps {
     chat: Chat | null
     setChat ?: React.Dispatch<React.SetStateAction<Chat | null>>
+    setSelectedProfile : React.Dispatch<React.SetStateAction<User | null>>
 }
 
-const ChatBox = ({chat, setChat}: ChatBoxProps) => {
+const ChatBox = ({chat, setChat, setSelectedProfile}: ChatBoxProps) => {
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [messageInput, setMessageInput] = useState<string>('');
     const [messages, setMessages] = useState<Message[] | undefined>(chat?.messages);
@@ -80,6 +82,7 @@ const ChatBox = ({chat, setChat}: ChatBoxProps) => {
                                 content={message.content} 
                                 created_at={message.created_at} 
                                 isOwnMessage={message.user.id === JSON.parse(user).id}
+                                setSelectedProfile={setSelectedProfile}
                                 />
                         ))
                     }

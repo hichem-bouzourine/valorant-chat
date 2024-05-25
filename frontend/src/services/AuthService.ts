@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export interface User {
+    createdAt: string
+    email: string
+    id: string
+    name:string
+    password?: string
+    photo: string
+    updatedAt: string
+}
+
 export const login = async (email: string, password: string) => {
     try {
         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}api/auth/login`, {

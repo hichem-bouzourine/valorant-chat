@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthProvider.tsx';
 import Matchs from './pages/Matchs.tsx'
 import { WebSocketProvider } from './context/WebSocketProvider.tsx'
 import WebSocketConnection from './context/WebSocketConnection.tsx'
+import Profile from './pages/Profile.tsx'
 
 
 
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path="/" element={<App />} errorElement={<Error />} /> {/* 👈 Renders at /app/ */}
               <Route path="/login" element={<Login />} errorElement={<Error />} /> {/* 👈 Renders at /login/ */}
               <Route path="/matchs" element={<Matchs />} errorElement={<Error />} /> {/* 👈 Renders at /matchs/ */}
+              <Route path="/profile" element={<Profile />} /> {/* 👈 Renders at /error/ */}
               <Route path='*' element={<Error />} /> {/* 👈 Renders at any other route */}
             </Routes>
           </WebSocketConnection>
