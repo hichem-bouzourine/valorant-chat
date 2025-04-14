@@ -2,22 +2,43 @@ package prisma
 
 import (
 	"context"
+	"log"
 	"pc3r/prisma/db"
 )
 
-// code de la connexion avec Prisma est inspiré d'un étudiant dans la salle TME.
-var prisma *db.PrismaClient
-var ctx context.Context
+var (
+	prisma *db.PrismaClient
+	ctx    context.Context
+)
 
-func Init() {
+func Init() error {
 	prisma = db.NewClient()
 	ctx = context.Background()
-	prisma.Prisma.Connect()
+	
+	// Connect to the database
+	if err := prisma.Prisma.Connect(); err != nil {
+		log.Printf("Failed to connect to database: %v", err)
+		return err
+	}
+	
+	return nil
 }
 
 func GetPrisma() (*db.PrismaClient, context.Context) {
 	if prisma == nil {
-		Init()
+		if err := Init(); err != nil {
+			// Handle error appropriately - maybe panic or retry
+			log.Fatal("Failed to initialize Prisma client")
+		}
 	}
 	return prisma, ctx
+}
+
+// Add cleanup function
+func Close() {
+	if prisma != nil {
+		if err := prisma.Prisma.Disconnect(); err != nil {
+			log.Printf("Error disconnecting Prisma: %v", err)
+		}
+	}
 }

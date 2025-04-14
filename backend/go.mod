@@ -9,7 +9,10 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/rs/cors v1.10.1
 	github.com/shopspring/decimal v1.4.0
-	github.com/steebchen/prisma-client-go v0.37.0
+	github.com/steebchen/prisma-client-go v0.47.0
 )
 
-require golang.org/x/net v0.17.0 // indirect
+require (
+	go.mongodb.org/mongo-driver/v2 v2.0.1 // indirect
+	golang.org/x/net v0.17.0 // indirect
+)
